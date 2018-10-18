@@ -8,6 +8,19 @@
   </div>
 </template>
 
+<script>
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+import Vue from 'vue'
+import BootstrapVue from 'bootstrap-vue'
+Vue.use(BootstrapVue);
+
+export default {
+  
+}
+</script>
+
+
 <style>
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;

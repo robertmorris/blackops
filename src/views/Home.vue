@@ -2,37 +2,35 @@
 
 <div id="inputForm">
   <p class="thick">Xbox Live Gamertag</p>
-    <b-form-input v-model="text1"
+    <b-form-input v-model="gamerTag.tag"
                   type="text"
                   placeholder="Enter your Xbox Gamertag">
     </b-form-input>
-    <b-button class="mt-2">Add</b-button>
+    <b-button class="mt-2" @click="addTag">Add</b-button>
+
+    <div class="mt-2">
+        <div class="d-flex flex-row">
+                <div class="card mr-1" v-for="gamerTag in gamerTags" v-bind:key="gamerTag.tag">                
+                    <div class="p-2">
+                        <b-card :title="gamerTag.tag"
+                                :img-src="require('../assets/blackopslogo.png')" fluid alt="Responsive image"
+                                :img-alt="gamerTag.tag"
+                                img-top               
+                                tag="article"
+                                style="max-width: 20rem"
+                                class="mb-1">
+                            <p class="card-text">
+                            <b-table striped hover :items="gamerTag.tag"></b-table>
+                            </p>
+                            <b-button :href="gamerTag.tag" variant="secondary">Open Profile</b-button>
+                        </b-card>
+                  </div>
+              </div>
+        </div>
+    </div>
+    
 </div>
 
-
-
-<!-- test stuff -->
-
-<!--   <div>
-    <div class="input-group">
-      <input type="text" class="form-control">
-      <span class="input-group-btn">
-        <button class="btn btn-default" type="button">Go!</button>
-      </span>
-    </div>
-  </div> -->
-
-
-
-<!--   <div class="home" style="background-color: black;">
-    <div class="home" style="background-color: black;">
-      <b-container>
-        <b-jumbotron header="Old Man Clan">
-          <b-img :src="require('../assets/blackopslogo.png')" fluid alt="Responsive image" />
-        </b-jumbotron>
-      </b-container>
-    </div>
-  </div> -->
 </template>
 
 <script>
@@ -47,7 +45,15 @@ export default {
 
     data () {
     return {
-      text1: ''
+      gamerTag: {
+        tag: ''
+      },
+      gamerTags: []
+    }
+  },
+  methods: {
+    addTag(){
+      this.gamerTags.push(this.gamerTag)
     }
   }
 }

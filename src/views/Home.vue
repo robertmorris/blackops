@@ -1,15 +1,16 @@
 <template>
-
+<div>
 <div id="inputForm">
   <p class="thick">Xbox Live Gamertag</p>
-    <b-form-input v-model="gamerTag.tag"
+    <b-form-input v-model="inputText"
                   type="text"
                   placeholder="Enter your Xbox Gamertag">
     </b-form-input>
-    <b-button class="mt-2" @click="addTag">Add</b-button>
+    <b-button class="mt-2" @click="addTag">Add</b-button>    
+</div>
 
     <div class="mt-2">
-        <div class="d-flex flex-row">
+        <div class="flex-container">
                 <div class="card mr-1" v-for="gamerTag in gamerTags" v-bind:key="gamerTag.tag">                
                     <div class="p-2">
                         <b-card :title="gamerTag.tag"
@@ -28,9 +29,7 @@
               </div>
         </div>
     </div>
-    
 </div>
-
 </template>
 
 <script>
@@ -45,6 +44,7 @@ export default {
 
     data () {
     return {
+      inputText:'',
       gamerTag: {
         tag: ''
       },
@@ -53,7 +53,9 @@ export default {
   },
   methods: {
     addTag(){
-      this.gamerTags.push(this.gamerTag)
+      this.gamerTags.push({
+        tag: this.inputText
+      })
     }
   }
 }
@@ -67,5 +69,10 @@ export default {
 
 p.thick {
     font-weight: bold;
+}
+
+.flex-container {
+  display: flex;
+  flex-flow: row wrap;
 }
 </style>

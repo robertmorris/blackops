@@ -11,19 +11,19 @@
 
     <div class="mt-2">
         <div class="flex-container">
-                <div class="card mr-1" v-for="gamerTag in gamerTags" v-bind:key="gamerTag.tag">                
+                <div class="card mr-1" v-for="gamerTag in gamerTags" :key="gamerTag">                
                     <div class="p-2">
-                        <b-card :title="gamerTag.tag"
+                        <b-card :title="gamerTag"
                                 :img-src="require('../assets/blackopslogo.png')" fluid alt="Responsive image"
-                                :img-alt="gamerTag.tag"
+                                :img-alt="gamerTag"
                                 img-top               
                                 tag="article"
                                 style="max-width: 20rem"
                                 class="mb-1">
                             <p class="card-text">
-                            <b-table striped hover :items="gamerTag.tag"></b-table>
+                            <b-table striped hover :items="gamerTag"></b-table>
                             </p>
-                            <b-button :href="gamerTag.tag" variant="secondary">Open Profile</b-button>
+                            <b-button :href="gamerTag" variant="secondary">Open Profile</b-button>
                         </b-card>
                   </div>
               </div>
@@ -34,31 +34,52 @@
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import GamerServices from "@/services/gamer";
 
 export default {
-  name: 'home',
-  components: {
-    HelloWorld
-  },
+  name: "home",
+  components: {},
 
-    data () {
+  data() {
     return {
-      inputText:'',
-      gamerTag: {
-        tag: ''
-      },
-      gamerTags: []
-    }
+      inputText: "",
+      gamerTags: ["beardedM0nk3y", "s3llison", "Markhuf", "UrgedOpossum27"],
+      gamerData: []
+    };
+  },
+  mounted() {
+    this.$nextTick(function() {
+      this.loadGamers();
+    });
   },
   methods: {
-    addTag(){
-      this.gamerTags.push({
-        tag: this.inputText
-      })
+    addTag() {
+      this.gamerTags.push(this.inputText);
+    },
+    loadGamers() {
+      this.gamerTags.forEach(gamerTag => {
+        GamerServices.getGamerData(gamerTag).then(response => {
+          this.buildGamerData(response.data);
+        });
+      });
+    },
+    buildGamerData(data) {
+      debugger;
+      let stats = data.stats;
+      let blackoutStats = stats.blackoutExtra;
+      let gamerTag = data.user.username;
+
+      this.gamerData.push({
+          gamerTag
+      });
+    }
+  },
+  watch: {
+    gamerTags: function() {
+      debugger;
     }
   }
-}
+};
 </script>
 
 <style>
@@ -68,7 +89,7 @@ export default {
 }
 
 p.thick {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .flex-container {
